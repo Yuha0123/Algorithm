@@ -1,0 +1,17 @@
+class Solution:
+    def isPalindrome(self, s: str) -> bool:
+        
+        my_str = []
+        #remove special character except alphabet and number
+        for char in s:
+            #if char is alphabet or number, get its lower case
+            if char.isalnum():
+                my_str.append(char.lower())
+        
+  
+        for i in range(len(my_str)//2):
+            if my_str[i] != my_str[len(my_str)-1 - i]:
+                return False
+        
+        
+        return True
