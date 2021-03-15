@@ -1,0 +1,29 @@
+class Solution:
+    def mostCommonWord(self, paragraph: str, banned: List[str]) -> str:
+        
+        count = {}
+        
+        #replace special character by white space
+        paragraph = re.sub("[!?',;.]",' ', paragraph)
+        words = paragraph.split()
+        
+        for word in words:
+            #remove special character and change it to lower case
+            word = re.sub("[^a-zA-Z]",'',word)
+            word = word.lower()
+            
+            #count the frequency of words
+            if word not in count:
+                count[word] = 1
+            else:
+                count[word] = count[word] + 1
+                
+        #except banned words
+        for word in banned:
+            if word in count:
+                count.pop(word)
+        
+        #ascending sort by the counting number 
+        count = dict(sorted(count.items(), key = lambda item: item[1], reverse = True))
+        
+        return list(count.keys())[0]
