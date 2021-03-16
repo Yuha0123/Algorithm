@@ -1,0 +1,32 @@
+class Solution:
+    def groupAnagrams(self, strs: List[str]) -> List[List[str]]:
+        
+        anagram_group = []
+        #list words in alphabetical order
+        ordered_strs = []
+        
+        for word in strs:
+            ordered_strs.append("".join(sorted(word)))
+        
+        
+        #find anagram_group
+        while(len(strs)!=0):
+            word = ordered_strs[0]
+            temp = [strs[0]]
+            del strs[0]
+            del ordered_strs[0]
+            
+            
+            while(word in ordered_strs):
+                index = ordered_strs.index(word)
+                temp.append(strs[index])
+                del strs[index]
+                del ordered_strs[index]
+                
+            
+            anagram_group.append(temp)
+            
+        return anagram_group
+                
+                    
+                
