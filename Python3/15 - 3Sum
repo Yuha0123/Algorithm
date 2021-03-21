@@ -1,0 +1,49 @@
+class Solution:
+    def threeSum(self, nums: List[int]) -> List[List[int]]:
+        
+        nums = sorted(nums)
+        result = []
+        
+        #if there is 0 in nums,
+        num_zeros = nums.count(0)
+        if num_zeros >= 3:
+            result.append([0,0,0])
+            
+            #remove 0 in array
+            while(num_zeros > 1):
+                nums.remove(0)
+                num_zeros = num_zeros - 1
+            
+        
+        for i in range(len(nums) - 2):
+            #exception for duplication
+            if i > 0 and nums[i - 1] == nums[i]:
+                continue
+            
+            if nums[i] > 0:
+                break
+            
+            left = i + 1
+            right = len(nums) - 1
+            two_sum = - 1 * nums[i]
+            
+            while(left < right):
+                if nums[left] + nums[right] == two_sum:
+                    result.append([nums[i], nums[left], nums[right]])
+                    
+                    while left < right and nums[left]==nums[left + 1]  :
+                        left = left + 1
+                    while left < right and nums[right]==nums[right - 1] :
+                        right = right - 1
+                        
+                    left = left + 1
+                    right = right - 1
+                    
+                
+                elif nums[left] + nums[right] > two_sum:
+                    right = right - 1
+                else:
+                    left = left + 1
+            
+        
+        return result
