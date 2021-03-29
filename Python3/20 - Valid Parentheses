@@ -1,0 +1,29 @@
+class Solution:
+    def isValid(self, s: str) -> bool:
+        
+        if len(s) == 1:
+            return False
+        else:
+            stack = []
+        
+        for char in s:
+            if char == '(' or char == '[' or char == '{':
+                stack.append(char)
+            elif len(stack) == 0:
+                stack.append(char)
+            else:
+                prev_char = stack.pop()
+                
+                if prev_char == '(' and char == ')':
+                    continue
+                elif prev_char == '{' and char == '}':
+                    continue
+                elif prev_char == '[' and char == ']':
+                    continue
+                else:
+                    return False
+                
+        if len(stack) > 0:
+            return False
+        else:
+            return True
