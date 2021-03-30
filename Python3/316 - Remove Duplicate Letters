@@ -1,0 +1,23 @@
+class Solution:
+    def removeDuplicateLetters(self, s: str) -> str:
+        
+        counter = collections.Counter(s)
+        stack = []
+        
+        for char in s:
+            counter[char] -= 1
+            
+            if len(stack) == 0 or stack[-1] < char:
+                if char not in stack:
+                    stack.append(char)
+            else:
+                if char not in stack:   
+                    while len(stack) > 0 and stack[-1] >= char:
+                        if counter[stack[-1]] > 0:
+                            stack.pop()
+                        else:
+                            break
+                    stack.append(char)
+            
+        
+        return ''.join(stack)
