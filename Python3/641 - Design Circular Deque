@@ -1,0 +1,133 @@
+class double_linked_list:
+    def __init__(self, value = 0, head = None, tail = None):
+        self.head = head
+        self.tail = tail
+        self.value = value
+
+class MyCircularDeque:
+    
+    
+    def __init__(self, k: int):
+        """
+        Initialize your data structure here. Set the size of the deque to be k.
+        """
+        self.head_node = double_linked_list()
+        self.tail_node = double_linked_list()
+        self.head_node.tail, self.tail_node.head = self.tail_node, self.head_node
+        
+        self.capacity = k
+        self.size = 0
+        
+    def insert_node(self, node, new_node):
+        next_node = node.tail
+        
+        node.tail, new_node.head = new_node, node
+        next_node.head, new_node.tail = new_node, next_node
+        
+        self.size = self.size + 1
+        
+    def delete_node(self, node):
+        next_node = node.tail
+        
+        node.head.tail = next_node
+        next_node.head = node.head
+        
+        self.size = self.size - 1
+        
+
+    def insertFront(self, value: int) -> bool:
+        """
+        Adds an item at the front of Deque. Return true if the operation is successful.
+        """
+        if self.size < self.capacity:
+            new_node = double_linked_list(value = value)
+            self.insert_node(self.head_node, new_node)
+            
+            return True
+        else:
+            return False
+
+    def insertLast(self, value: int) -> bool:
+        """
+        Adds an item at the rear of Deque. Return true if the operation is successful.
+        """
+        if self.size < self.capacity:
+            new_node = double_linked_list(value = value)
+            self.insert_node(self.tail_node.head, new_node)
+            return True
+        else:
+            return False
+        
+
+    def deleteFront(self) -> bool:
+        """
+        Deletes an item from the front of Deque. Return true if the operation is successful.
+        """
+        if self.size > 0:
+            self.delete_node(self.head_node.tail)
+            return True
+        else:
+            False
+        
+
+    def deleteLast(self) -> bool:
+        """
+        Deletes an item from the rear of Deque. Return true if the operation is successful.
+        """
+        if self.size > 0:
+            self.delete_node(self.tail_node.head)
+            return True
+        else:
+            False
+        
+
+    def getFront(self) -> int:
+        """
+        Get the front item from the deque.
+        """
+        if self.size > 0:
+            return self.head_node.tail.value
+        else:
+            return -1
+        
+
+    def getRear(self) -> int:
+        """
+        Get the last item from the deque.
+        """
+        if self.size > 0:
+            return self.tail_node.head.value
+        else:
+            return -1
+        
+
+    def isEmpty(self) -> bool:
+        """
+        Checks whether the circular deque is empty or not.
+        """
+        if self.size == 0:
+            return True
+        else:
+            return False
+        
+
+    def isFull(self) -> bool:
+        """
+        Checks whether the circular deque is full or not.
+        """
+        if self.size == self.capacity:
+            return True
+        else:
+            return False
+
+
+# Your MyCircularDeque object will be instantiated and called as such:
+# obj = MyCircularDeque(k)
+# param_1 = obj.insertFront(value)
+# param_2 = obj.insertLast(value)
+# param_3 = obj.deleteFront()
+# param_4 = obj.deleteLast()
+# param_5 = obj.getFront()
+# param_6 = obj.getRear()
+# param_7 = obj.isEmpty()
+# param_8 = obj.isFull()
