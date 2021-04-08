@@ -1,0 +1,11 @@
+class Solution:
+    def numJewelsInStones(self, jewels: str, stones: str) -> int:
+        count = collections.Counter(stones)
+        
+        num = 0
+        
+        for key, count in count.items():
+            if key in jewels:
+                num = num + count
+                
+        return num
