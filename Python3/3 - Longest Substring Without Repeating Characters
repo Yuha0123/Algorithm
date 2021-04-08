@@ -1,0 +1,28 @@
+class Solution:
+    def lengthOfLongestSubstring(self, s: str) -> int:
+        
+        
+        if len(s) == 1:
+            return 1
+
+        max_len = 0
+        
+        left, right = 0, 0
+        
+        for char in s:
+            if char not in s[left:right]:
+                right = right + 1
+            else:
+                if max_len < right - left:
+                    max_len = right - left
+                
+                left = left + 1
+                while left <= right and (char in s[left:right]):
+                    left = left + 1
+                
+                right = right + 1
+        
+        if max_len < right - left:
+            max_len = right - left
+                
+        return max_len
