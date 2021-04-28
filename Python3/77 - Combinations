@@ -2,7 +2,6 @@ class Solution:
     def combine(self, n: int, k: int) -> List[List[int]]:
         combine = []
         nums = list(range(1, n+1))
-        num_iter = n - k + 1
         
         def DFS(index, k , path):
             if k == 0:
