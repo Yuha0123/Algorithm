@@ -1,0 +1,24 @@
+class Solution:
+    def combinationSum(self, candidates: List[int], target: int) -> List[List[int]]:
+        result = []
+        path = []
+        candidates.sort()
+        def DFS(index):
+            if sum(path) == target:
+                path.sort()
+                if path not in result:
+                    result.append(path[:])
+                return
+            elif sum(path) > target:
+                return
+            
+            for i in range(index, len(candidates)):
+                path.append(candidates[i])
+                DFS(index)
+                path.pop()
+                index = index + 1
+                
+        
+        DFS(0)
+        
+        return result
