@@ -1,0 +1,21 @@
+class Solution:
+    def findItinerary(self, tickets: List[List[str]]) -> List[str]:
+        dests = collections.defaultdict(list)
+        
+        for start, dest in sorted(tickets):
+            dests[start].append(dest)
+                
+        result = []
+        
+        def DFS(start):
+            
+            while dests[start]:
+                DFS(dests[start].pop(0))
+            result.append(start)
+            
+        DFS("JFK")
+        
+        return result[::-1]
+    
+                
+        
