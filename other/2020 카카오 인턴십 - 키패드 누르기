@@ -1,0 +1,49 @@
+def solution(numbers, hand):
+    def cal_dist(num1, num2):
+        if num1 > num2:
+            num1, num2 = num2, num1
+        
+        if num1 % 3 == 0 and num2 % 3 == 1:
+            dist = 2
+        else:
+            dist = 0
+        
+        diff = num2 - num1
+        dist = diff%3 + diff//3 + dist
+        
+        return dist
+        
+    answer = ''
+    
+    prev_left = 10  #10 means *
+    prev_right = 12 #12 means #
+    
+    
+    for number in numbers:
+        if number%3 == 1:   #1,4,7
+            answer = answer + "L"
+        elif number % 3 == 0 and number != 0:   #3,6,9
+            answer = answer + "R"
+        else:   #2,5,8,0
+            if number == 0:
+                number = 11
+            
+            left_dist = cal_dist(prev_left, number)
+            right_dist = cal_dist(prev_right, number)
+            
+            if  left_dist < right_dist:
+                answer = answer + "L"
+            elif left_dist > right_dist:
+                answer = answer + "R"
+            else:
+                if hand == "left":
+                    answer = answer + "L"
+                else:
+                    answer = answer + "R"
+                    
+        if answer[-1] == 'L':
+            prev_left = number
+        else:
+            prev_right = number
+
+    return answer
