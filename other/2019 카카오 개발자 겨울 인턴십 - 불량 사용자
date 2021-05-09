@@ -1,0 +1,50 @@
+import collections
+
+def solution(user_id, banned_id):
+    def match_id(user_id, banned_id):
+        if len(user_id) != len(banned_id):
+            return False
+        
+        for i in range(len(banned_id)):
+            if banned_id[i] == '*':
+                continue
+            
+            if banned_id[i] != user_id[i]:
+                return False
+            
+        return True
+    
+    path = []
+    combinations = []
+    
+    def DFS(i):
+        if i == len(banned_id):
+            combinations.append(''.join(sorted(path[:])))
+            return
+        
+        for id in banned_list[banned_id[i]]:
+            if id in path:
+                continue
+            
+            path.append(id)
+            DFS(i+1)
+            path.pop()
+            
+            
+            
+            
+    banned_list = collections.defaultdict(set)
+    
+    for banned in banned_id:
+        for user in user_id:
+            if match_id(user,banned):
+                banned_list[banned].add(user)
+    
+    
+    
+    DFS(0)
+    
+    combinations = set(combinations)
+    
+
+    return len(combinations)
