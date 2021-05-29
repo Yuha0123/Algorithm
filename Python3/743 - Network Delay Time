@@ -1,0 +1,32 @@
+class Solution:
+    def networkDelayTime(self, times: List[List[int]], n: int, k: int) -> int:
+        
+        dist = collections.defaultdict(int)
+        for i in range(1,n+1):
+            dist[i] = -1
+        
+        graph = collections.defaultdict(dict)
+        for u,v,w in times:
+            graph[u][v] = w
+        
+        dist[k] = 0
+        Q = [(0, k)]
+        
+        while Q:
+            cur_dist, cur_graph = heapq.heappop(Q)
+            
+            if cur_dist > dist[cur_graph]:
+                continue
+                
+            for key, value in graph[cur_graph].items():
+                new_dist = cur_dist + value
+                
+                if (dist[key] == -1) or (new_dist < dist[key]):
+                    dist[key] = new_dist
+                    heapq.heappush(Q, (new_dist, key))
+                    
+        if min(dist.values()) == -1:
+            return -1
+        else:
+            return max(dist.values())
+                    
