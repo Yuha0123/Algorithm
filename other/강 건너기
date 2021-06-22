@@ -1,0 +1,74 @@
+#include<vector>
+#include<iostream>
+#include<fstream>
+#include<algorithm>
+
+using namespace std;
+
+int main()
+{
+	char * buffer = nullptr;
+	int number_test = 0, number_camel;
+	vector<int> time;
+
+	ifstream fin("sample_input.txt");
+	
+
+	if (fin.fail())
+	{
+		cerr << "File can not found" << endl;
+		exit(1);
+	}
+
+	fin >> number_test;
+
+	for (int i = 1; i <= number_test; i++)
+	{
+		fin >> number_camel;
+		time.clear();
+
+		for (int j = 0; j < number_camel; j++)
+		{
+			int t = 0;
+			fin >> t;
+			time.push_back(t);
+		}
+
+
+		int result = 0;
+
+		sort(time.begin(), time.end());
+
+		while (time.size() > 3)
+		{
+			int cost = min(time[0] + 2 * time[1] + time[time.size() - 1], time[0] * 2 + time[time.size() - 1] + time[time.size() - 2]);
+			
+			result = result + cost;
+
+			time.pop_back();
+			time.pop_back();
+		}
+
+		if (time.size() == 3)
+		{
+			result = result + time[0] + time[1] + time[2];
+		}
+		else if(time.size() == 2)
+		{
+			result = result + time[1];
+		}
+		else
+		{
+			result = result + time[0];
+		}
+
+
+		//print result
+		cout << "#" << i << " " << result << endl;
+	}
+
+
+	fin.close();
+
+	return 0;
+}
