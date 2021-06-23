@@ -1,0 +1,33 @@
+import collections
+
+def solution(n, computers):
+    #use BFS
+    
+    answer = 0
+    
+    graph = collections.defaultdict(list)
+    
+    for i in range(n):
+        for j in range(n):
+            if computers[i][j] == 1:
+                graph[i].append(j)
+                
+    queue = []
+    visit = set()
+    
+    for i in range(n):
+        if i not in visit:
+            visit.add(i)
+            queue.append(i)
+            answer = answer + 1
+            
+            while queue:
+                node = queue.pop()
+                visit.add(node)
+                
+                for next_node in graph[node]:
+                    if next_node not in visit:
+                        queue.append(next_node)
+                    
+                    
+    return answer
