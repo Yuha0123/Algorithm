@@ -1,0 +1,18 @@
+def solution(numbers, target):
+    answer = 0
+    length = len(numbers)
+    
+    def DFS(i, x):
+        if i == length:
+            if x == target:
+                nonlocal answer
+                answer = answer + 1
+            return
+        
+        DFS(i+1, x + numbers[i])
+        DFS(i+1, x - numbers[i])
+        
+        
+    DFS(0, 0)
+    
+    return answer
