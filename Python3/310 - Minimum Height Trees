@@ -1,0 +1,34 @@
+class Solution:
+    def findMinHeightTrees(self, n: int, edges: List[List[int]]) -> List[int]:
+        if n == 1:
+            return [0]
+        
+        counter = collections.defaultdict(int)
+        graph = collections.defaultdict(list)
+        
+        for u,v in edges:
+            counter[u] = counter[u] + 1
+            counter[v] = counter[v] + 1
+            graph[u].append(v)
+            graph[v].append(u)
+            
+        while len(counter) > 2:
+            delete_key = []
+            
+            for key in counter.keys():
+                if counter[key] == 1:
+                    delete_key.append(key)
+                    
+            for key in delete_key:
+                dest = graph[key][0]
+
+                del counter[key]
+                del graph[key]
+
+                graph[dest].remove(key)
+                counter[dest] = counter[dest] - 1
+                    
+                    
+        return counter.keys()
+            
+        
