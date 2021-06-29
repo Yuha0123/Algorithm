@@ -1,0 +1,24 @@
+class Solution:
+    def minDiffInBST(self, root: TreeNode) -> int:
+        min_diff = sys.maxsize
+        prev = -sys.maxsize
+        
+        stack  = []
+        
+        node = root
+        
+        while stack or node:
+            while node:
+                stack.append(node)
+                node = node.left
+            
+            node = stack.pop()
+            
+            min_diff = min(min_diff, node.val - prev)
+            prev = node.val
+            
+            node = node.right
+            
+        
+        return min_diff
+                
