@@ -1,0 +1,94 @@
+#include<iostream>
+#include<vector>
+#include<algorithm>
+
+using namespace std;
+
+int find_pos(vector<pair<int,int>> photo, vector<int>recommend);
+
+int main()
+{
+	int size, size_recommend;
+	
+	cin >> size >> size_recommend;
+
+	vector<pair<int, int>> photo; //(timestamp, student)
+
+	vector<int> recommend(100, -1);
+	vector<int> input;
+
+	for (int i = 0; i < size_recommend; i++)
+	{
+		int student;
+
+		cin >> student;
+		input.push_back(student);
+	}
+
+
+
+	for (int i = 0; i < size_recommend; i++)
+	{
+		int cur = input[i] - 1;
+
+		if (recommend[cur] > 0)
+			recommend[cur]++;
+		else
+		{
+			if (photo.size() < size)
+			{
+				photo.push_back(make_pair(i, cur));
+				recommend[cur] = 1;
+			}
+				
+			else
+			{
+				int pos = find_pos(photo, recommend);
+
+				recommend[photo[pos].second] = -1;
+				recommend[cur] = 1;
+				photo[pos].first = i;
+				photo[pos].second = cur;
+			}
+		}
+	
+	}
+
+	vector<int> result;
+	for (int i = 0; i < photo.size(); i++)
+		result.push_back(photo[i].second + 1);
+
+	sort(result.begin(), result.end());
+
+	for (int i = 0; i < result.size(); i++)
+		cout << result[i] << " ";
+
+}
+
+
+int find_pos(vector<pair<int,int>> photo, vector<int>recommend)
+{
+	int min_recommend = 1001;
+	int max_timestamp = 1001;
+	int pos;
+
+	for (int i = 0; i < photo.size(); i++)
+	{
+		int cur = photo[i].second;
+
+		if (min_recommend > recommend[cur])
+		{
+			min_recommend = recommend[cur];
+			max_timestamp = photo[i].first;
+			pos = i;
+		}
+		else if (min_recommend == recommend[cur] && max_timestamp > photo[i].first)
+		{
+			min_recommend = recommend[cur];
+			max_timestamp = photo[i].first;
+			pos = i;
+		}
+	}
+
+	return pos;
+}
