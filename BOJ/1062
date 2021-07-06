@@ -1,0 +1,84 @@
+#include<iostream>
+#include<vector>
+#include<string>
+#include<algorithm>
+using namespace std;
+
+int max_num = 0;
+int n, k;
+vector<string> input;
+vector<int> visited(26, 0);
+
+void DFS(char alpha, int count)
+{
+	if (count == k)
+	{
+		int num = 0;
+		for (int i = 0; i < n; i++)
+		{
+			string str = input[i];
+
+			bool flag = true;
+			for (int j = 0; j < str.length(); j++)
+			{
+				if (visited[str[j] - 'a'] == 0)
+				{
+					flag = false;
+					break;
+				}
+			}
+			
+			if (flag == true)
+				num++;
+
+		}
+
+		max_num = max(max_num, num);
+		
+		return;
+	}
+
+	for (int i = alpha; i <= 'z'; i++)
+	{
+		if (visited[i - 'a'] == 0)
+		{
+			visited[i - 'a'] = 1;
+			DFS(i+1, count + 1);
+			visited[i - 'a'] = 0;
+		}
+	}
+
+}
+
+int main()
+{
+	
+	//get input
+	cin >> n >> k;
+
+	if (k < 5)
+	{
+		cout << "0";
+		return 0;
+	}
+	
+	for (int i = 0; i < n; i++)
+	{
+		string buffer;
+		cin >> buffer;
+		input.push_back(buffer);
+	}
+
+
+	visited['a' - 'a'] = 1;
+	visited['c' - 'a'] = 1;
+	visited['t' - 'a'] = 1;
+	visited['i' - 'a'] = 1;
+	visited['n' - 'a'] = 1;
+
+
+	DFS('a', 5);
+
+	cout << max_num;
+	
+}
