@@ -1,0 +1,74 @@
+#include<iostream>
+#include<vector>
+#include<algorithm>
+#include<string>
+#include<queue>
+#include<set>
+
+using namespace std;
+
+string swap(string str, int i, int j);
+
+int main()
+{
+	int k;
+	string num;
+	queue<string> q;
+
+	cin >> num >> k;
+
+	q.push(num);
+
+	for (int i = 0; i < k; i++)
+	{
+		int size = q.size();
+		set<string> visited;
+
+		while (size--)
+		{
+			string temp = q.front();
+			q.pop();
+
+			for (int i = 0; i < temp.size() - 1; i++)
+			{
+				for (int j = i + 1; j < temp.size(); j++)
+				{
+					if (i == 0 && temp[j] == '0')
+						continue;
+
+					string result = swap(temp, i, j);
+
+					//check visit
+					if (visited.find(result) == visited.end())
+					{
+						q.push(result);
+						visited.insert(result);
+					}
+
+				}
+			}
+
+		}
+	}
+
+	int max_num = -1;
+
+	while (!q.empty())
+	{
+		int temp = stoi(q.front());
+		q.pop();
+		max_num = max(max_num, temp);
+	}
+
+	cout << max_num;
+}
+
+string swap(string str, int i, int j)
+{
+	string result = str;
+
+	result[i] = str[j];
+	result[j] = str[i];
+
+	return result;
+}
