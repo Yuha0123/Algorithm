@@ -1,0 +1,13 @@
+class Solution:
+    def kClosest(self, points: List[List[int]], k: int) -> List[List[int]]:
+        arr = []
+        
+        for x,y in points:
+            heapq.heappush(arr,(x*x + y*y, [x,y]))
+            
+        answer = []
+        
+        for i in range(k):
+            answer.append(heapq.heappop(arr)[1])
+            
+        return answer
