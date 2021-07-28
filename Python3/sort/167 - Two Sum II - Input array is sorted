@@ -1,0 +1,11 @@
+class Solution:
+    def twoSum(self, numbers: List[int], target: int) -> List[int]:
+        
+        for i in range(len(numbers)):
+            new_target = target - numbers[i]
+            
+            
+            index = bisect.bisect_left(numbers[i+1:], new_target) + i + 1
+
+            if index < len(numbers) and numbers[index] == new_target:
+                return [i+1,index+1]
