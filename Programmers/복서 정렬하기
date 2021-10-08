@@ -1,0 +1,43 @@
+def solution(weights, head2head):
+    def cal_winning(datas):
+        cnt_battle = 0
+        cnt_win = 0
+        
+        for data in datas:
+            if data == 'N':
+                continue
+            elif data == 'W':
+                cnt_battle += 1
+                cnt_win += 1
+            else:
+                cnt_battle += 1
+        
+        if cnt_battle == 0 or cnt_win == 0:
+            return 0
+        else:
+            return cnt_win/cnt_battle
+    
+    def cnt_hardwin(boxer, datas): #자신보다 몸무게가 무거운 복서를 이긴 횟수 반환
+        cnt = 0
+        
+        for i in range(len(datas)):
+            if datas[i] == 'W' and weights[boxer] < weights[i]:
+                cnt += 1
+        
+        return cnt
+    
+    
+    arr = []
+    
+    for i in range(len(weights)):
+        arr.append((cal_winning(head2head[i]), cnt_hardwin(i, head2head[i]), weights[i], -(i + 1)))
+        
+    arr.sort(reverse = True)
+    
+    answer = [0 for _ in range(len(weights))]
+    
+    for i in range(len(arr)):
+        answer[i] = -arr[i][3]
+    
+    
+    return answer
