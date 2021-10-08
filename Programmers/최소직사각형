@@ -1,0 +1,19 @@
+def solution(sizes):
+    answer = 0
+    
+    #가로 - 가로, 가로 - 세로 끼리의 차이를 비교해서 더 작은 쪽으로?
+    
+    wallet_w = sizes[0][0]
+    wallet_h = sizes[0][1]
+    
+    for w, h in sizes:
+        if abs(wallet_w - w) + abs(wallet_h - h) <= abs(wallet_w - h) + abs(wallet_h - w):
+            wallet_w = max(wallet_w, w)
+            wallet_h = max(wallet_h, h)
+        else:
+            wallet_w = max(wallet_w, h)
+            wallet_h = max(wallet_h, w)
+    
+    return wallet_w*wallet_h
+    
+    return answer
